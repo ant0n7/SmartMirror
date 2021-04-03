@@ -1,17 +1,31 @@
 # Frameworks
 import tkinter as tk
+from mirror import *
 
 
 print("Hello World\n")
 
 # Create window
+"""
 root = tk.Tk()
 
 # Create a new widget
-myLabel = tk.Label(root, text="Hello World")
-myLabel.pack()  # pack it to the screen
+myLabel1 = tk.Label(root, text="10:10")
+myLabel2 = tk.Label(root, text="Sa, 3.4.2021")
+
+myLabel1.grid(row=0, column=0)
+myLabel2.grid(row=1, column=0)
+
+#myLabel1.pack()  # pack it to the screen
+
 
 root.mainloop()
 #7158CC2857755964
 
-##
+##as
+"""
+
+myMirror = Mirror()
+myMirror.createClock()
+myMirror.displayClock()
+myMirror.window.mainloop()
