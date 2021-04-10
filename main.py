@@ -27,5 +27,9 @@ root.mainloop()
 
 myMirror = Mirror()
 myMirror.createClock()
+myMirror.createWeather()
+
 myMirror.displayClock()
+myMirror.displayWeather()
+
 myMirror.window.mainloop()
