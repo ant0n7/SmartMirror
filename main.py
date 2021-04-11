@@ -1,9 +1,12 @@
 # Frameworks
 import tkinter as tk
 from mirror import *
+import transport
 
 
 print("Hello World\n")
+print(utils.getNextDeparture())
+print(transport.getNextDepartureBus())
 
 # Create window
 """
