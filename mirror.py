@@ -2,6 +2,7 @@
 import tkinter as tk
 from datetime import datetime
 import utils
+import transport
 
 # Weather Imports
 import pyowm
@@ -86,5 +87,13 @@ class Mirror:
 
 
     def createDepartureBus(self):
-        text = utils.getNextDeparture()
+        color = "white"
+        fontSize = 100
+
+        self.weatherLabel = tk.Label(self.window, font=(font + str(fontSize)), bg=background, fg=color)
+        self.weatherLabel.place(x=self.width - 500, y=self.height - 500)
+        self.weatherLabel.configure(font=(fontFamily, fontSize, fontStyle))
+
+    def displayDepartureBus(self):
+        text = transport.getNextDepartureBus()
 

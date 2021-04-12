@@ -7,7 +7,7 @@ import transport
 print("Hello World\n")
 print(utils.getNextDeparture())
 print(transport.getNextDepartureBus())
-
+transport.getNextDepartureBusTable()
 # Create window
 """
 root = tk.Tk()
