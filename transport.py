@@ -77,7 +77,8 @@ def getNextDepartureBusTable():
         line2_string = bus_to_city_list[1].departureString
         return_string2 = "\n" + " " * round(len(return_string) * 1.5) + line2_string
         # return_string length = 28 -> number of whitespaces = 1.5x length
-        return return_string + return_string2
+        #return return_string + return_string2
+        return bus_to_city_list[0].departureString + "\n" + bus_to_city_list[1].departureString
     except IndexError:
         return "Error Processing Data\nNo Timetables available"
 

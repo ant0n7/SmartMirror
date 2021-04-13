@@ -45,7 +45,7 @@ class Mirror:
         fontSize = 200
 
         self.clockLabel = tk.Label(self.window, font=(self.font + str(fontSize)), bg=self.background, fg=color)
-        self.clockLabel.place(x=self.width - 1000, y=self.height - 1000)
+        self.clockLabel.place(x=self.width/3, y=self.height - 500)
         self.clockLabel.configure(font=(self.fontFamily, fontSize, self.fontStyle))
 
     def displayClock(self):
@@ -61,7 +61,7 @@ class Mirror:
         fontSize = 100
 
         self.weatherLabel = tk.Label(self.window, font=(self.font + str(fontSize)), bg=self.background, fg=color)
-        self.weatherLabel.place(x=self.width - 500, y=self.height - 500)
+        self.weatherLabel.place(x=self.width - 200, y=100)
         self.weatherLabel.configure(font=(self.fontFamily, fontSize, self.fontStyle))
 
     """Displays the text to the created weather label
@@ -77,7 +77,7 @@ class Mirror:
     ###########
     def createDepartureBus(self):
         color = self.standard_color
-        fontSize = 50
+        fontSize = 100
 
         self.nextDepartureBus = tk.Label(self.window, font=(self.font + str(fontSize)), bg=self.background, fg=color)
         self.nextDepartureBus.place(x=100, y=100)
