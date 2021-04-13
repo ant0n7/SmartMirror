@@ -1,3 +1,5 @@
+import traceback
+
 import requests
 from datetime import datetime
 
@@ -5,6 +7,7 @@ from datetime import datetime
 _base_url = "http://transport.opendata.ch/v1/"
 
 
+# WARNING: DEPRECATED!
 def getNextDepartureBus():
     station_name="Zuerich,%20Kapfstrasse"
     # KLUSPLATZ = 8591233
@@ -38,40 +41,45 @@ def getNextDepartureBus():
     # else:
     #     return departure_string + " +" + str(delay)
 
+
 def getNextDepartureBusTable():
     print("timetable")
-    station_name = "Zuerich,%20Kapfstrasse"
+    station_name = "Zurich,%20Kapfstrasse"
+    limit = 5
 
-    complete_url = _base_url + "stationboard?station=" + station_name + "&limit=2"
-    response = requests.get(complete_url)
-    information = response.json()
+    complete_url = _base_url + "stationboard?station=" + station_name + "&limit=" + str(limit)
 
-    print(information)
+    try:
+        response = requests.get(complete_url)
+        information = response.json()
 
-    stationboard = information['stationboard']
+        stationboard = information['stationboard']
 
-    bus1 = bus(stationboard, 0)
-    bus2 = bus(stationboard, 1)
+        bus_list = []
+        for i in range(0, limit):
+            bus_list.append(bus(stationboard, i))
+    except Exception:
+        traceback.print_exc()
+        return "Can't connect to \nOpenTransport Server"
 
-    print(bus1.delay)
-    print(bus1.direction)
-    print(bus1.departureString)
+    # Filter out all busses that go to Altstetten
+    bus_to_city_list = []
 
+    for busx in bus_list:
+        if busx.direction == "Zürich Altstetten, Bahnhof" and len(bus_to_city_list) < 2:
+            bus_to_city_list.append(busx)
 
-    print(bus2.delay)
-    print(bus2.direction)
-    print(bus2.departureString)
-    # stop = bus1['stop']
-    # print(stop)
+    for bus_to_city in bus_to_city_list:
+        print(bus_to_city.departureString)
 
-    # print(bus1['to'])
-
-    #connection2 = information[1]
-    #print("1: " + connection1)
-    #print("2: " + connection2)
-
-    return [bus1.departureString + " +"]
-
+    try:
+        return_string = "Bus " + bus_to_city_list[0].number + " Departures: " + bus_to_city_list[0].departureString
+        line2_string = bus_to_city_list[1].departureString
+        return_string2 = "\n" + " " * round(len(return_string) * 1.5) + line2_string
+        # return_string length = 28 -> number of whitespaces = 1.5x length
+        return return_string + return_string2
+    except IndexError:
+        return "Error Processing Data\nNo Timetables available"
 
 
 class bus:
@@ -83,7 +91,14 @@ class bus:
         self.delay = self.stop['delay']
         self.departureMS = self.stop['departureTimestamp']
         self.departureString = self.millisecondToString()
+        self.number = self.info['number']
 
     def millisecondToString(self):
         departure_datetime = datetime.fromtimestamp(self.departureMS)
-        return departure_datetime.strftime("%H:%M")
+        departure_string = departure_datetime.strftime("%H:%M")
+
+        if self.delay is None or self.delay == 0:
+            return departure_string + " +0\'"
+        else:
+            return departure_string + " +" + self.delay + "\'"
+
