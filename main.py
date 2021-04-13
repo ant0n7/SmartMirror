@@ -3,11 +3,6 @@ import tkinter as tk
 from mirror import *
 import transport
 
-
-print("Hello World\n")
-print(utils.getNextDeparture())
-print(transport.getNextDepartureBus())
-transport.getNextDepartureBusTable()
 # Create window
 """
 root = tk.Tk()
@@ -31,8 +26,10 @@ root.mainloop()
 myMirror = Mirror()
 myMirror.createClock()
 myMirror.createWeather()
+myMirror.createDepartureBus()
 
 myMirror.displayClock()
 myMirror.displayWeather()
+myMirror.displayDepartureBus()
 
 myMirror.window.mainloop()
